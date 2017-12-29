@@ -135,7 +135,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
 cd ~/.vim/bundle/YouCompleteMe/
 python3 ./install.py
-cd CURDIR
+cd ${CURDIR}
 # Write vimrc
 echo ./vimrc > ~/.vimrc
 echo "${GREEN}Don't forget to run 'PluginInstall' when open vim to install other plugin${NC}"
