@@ -1,5 +1,8 @@
 # tools
 This is a tools collection for myself
 
-## New_OS
+## NewOS
 This is for myself when reinstall Ubuntu 16.04
+
+## Python
+About Python scripts (maybe including some shell scripts)

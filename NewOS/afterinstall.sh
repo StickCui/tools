@@ -73,6 +73,7 @@ case ${HAS_CUDA} in
         echo "\nexport PATH=$PATH:/usr/local/cuda-8.0/bin" >> ~/.bashrc
         echo "\nexport CUDA_HOME=/usr/local/cuda-8.0" >> ~/.bashrc
         echo "\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-8.0/lib64:/usr/local/cuda-8.0/extras/CUPTI/lib64:/usr/lib/nvidia" >> ~/.bashrc
+        exit 0
     ;;
     *)
     ;;
