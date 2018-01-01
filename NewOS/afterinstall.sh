@@ -186,6 +186,7 @@ echo "${ORANGE}After install matlab then run:${NC}"
 echo "  ${ORANGE}sudo apt-get install matlab-support${NC}"
 
 # For PyTorch
+sudo apt-get install libtcmalloc-minimal4
 echo "\nexport LD_PRELOAD=/usr/lib/libtcmalloc_minimal.so.4" >> ~/.bashrc
 
 . ~/.bashrc
