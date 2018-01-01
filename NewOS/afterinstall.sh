@@ -105,9 +105,10 @@ sudo apt-get install ffmpeg
 
 # Python about
 sudo apt-get install python2.7-dev python3.5-dev python-pip python3-pip python-numpy python3-numpy
-sudo pip3 install --upgrade pip3
-sudo pip2 install --upgrade pip2
+sudo pip3 install --upgrade pip
+sudo pip2 install --upgrade pip
 sudo pip install pillow sk-video scikit-image six matplotlib protobuf urllib3
+sudo pip3 install pillow sk-video scikit-image six matplotlib protobuf urllib3
 
 # About Caffe
 sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libhdf5-serial-dev protobuf-compiler
@@ -132,13 +133,20 @@ echo "${GREEN}Don't forget to copy/upload '~/.ssh/id_rsa.pub' to github/server${
 sudo apt-get install vim
 # Config vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
 git clone https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
 cd ~/.vim/bundle/YouCompleteMe/
+git submodule update --init --recursive
 python3 ./install.py
 cd ${CURDIR}
 # Write vimrc
 echo ./vimrc > ~/.vimrc
 echo "${GREEN}Don't forget to run 'PluginInstall' when open vim to install other plugin${NC}"
+
+# Install tmux
+sudo apt-get install tmux
+echo '\nset -g default-terminal "screen-256color"\nset -g mouse on\n' >> ~/.tmux.conf
+echo '\nalias tmux"TERM=screen-256color-bce tmux"' >> ~/.bashrc
 
 # Sublime Text 3
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
