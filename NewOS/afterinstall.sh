@@ -140,7 +140,7 @@ git submodule update --init --recursive
 python3 ./install.py
 cd ${CURDIR}
 # Write vimrc
-echo ./vimrc > ~/.vimrc
+cat ./vimrc > ~/.vimrc
 echo "${GREEN}Don't forget to run 'PluginInstall' when open vim to install other plugin${NC}"
 
 # Install tmux
