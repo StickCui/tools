@@ -9,3 +9,6 @@ About Python scripts (maybe including some shell scripts)
 
 ## SwitchyOmega
 The config file of SwitchyOmega Plugin for Chrome Ubuntu version.
+
+## Others
+Other configure file or scripts.
