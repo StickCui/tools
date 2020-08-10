@@ -10,6 +10,13 @@ syntax on
 set t_Co=256
 
 :set mouse=a
+set incsearch " 搜索或者查找替换时，自动高亮匹配的字符串
+" set hlsearch " 高亮搜索结果
+if has("mouse_sgr")
+    set ttymouse=sgr
+else
+    set ttymouse=xterm2
+end
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -39,6 +46,13 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 Plugin 'Valloric/YouCompleteMe'
+let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py"
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos='left'
@@ -71,3 +85,87 @@ map <F4> :set nopaste<CR>
 if has("autocmd")
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "    normal! g'\"" | endif
 endif
+set backspace=indent,eol,start
+
+" 新建模板文件
+autocmd BufNewFile *.[ch],*.[ch]pp,Makefile,*.mk,*.sh,*.py call SnewFileCommet()
+
+func SnewFileCommet_c()
+    " call setline(1, "/**")
+    " call append(line("."), "* ")
+    let infos = "/**\n"
+                \."* @Author: Stick Cui\n"
+                \."* @Email: Stick_Cui@163.com\n"
+                \."* @Link: https://github.com/StickCui\n"
+                \."* @Date: ".strftime("%Y-%m-%d %H:%M:%S")."\n"
+                \."*\n"
+                \."* Copyright (C) ".strftime("%Y")." Stick Cui. All Rights Reserved.\n"
+                \."*/\n"
+                \."\n"
+    silent put! =infos
+endfunc
+
+func SnewFileCommet_sh()
+    let infos = "# @Author: Stick Cui\n"
+                \."# @Email: Stick_Cui@163.com\n"
+                \."# @Link: https://github.com/StickCui\n"
+                \."# @Date: ".strftime("%Y-%m-%d %H:%M:%S")."\n"
+                \."#\n"
+                \."# Copyright (C) ".strftime("%Y")." Stick Cui. All Rights Reserved.\n"
+    silent put =infos
+endfunc
+
+func SnewFileCommet()
+    if &filetype == "make"
+        call setline(1, "# Makefile")
+        call SnewFileCommet_sh()
+    elseif &filetype == "sh"
+        call setline(1,"#!/bin/bash")
+        call SnewFileCommet_sh()
+    elseif &filetype == "python"
+        let infos ="#!/usr/bin/env python\n"
+                    \."# -*- coding: utf-8 -*-\n"
+        silent put! =infos
+        call SnewFileCommet_sh()
+        call append(line("."), "import argparse")
+        call append(line(".")+1, "import os")
+        call append(line(".")+2, "")
+        call append(line(".")+3, "def main(args):")
+        call append(line(".")+4, "    pass")
+        call append(line(".")+5, "")
+        call append(line(".")+6, "if __name__ == '__main__':")
+        call append(line(".")+7, "    parser = argparse.ArgumentParser(description=\"\")")
+        call append(line(".")+8, "    parser.add_argument(\"-i\", \"--input\", type=str, default=\"\")")
+        call append(line(".")+9, "    parser.add_argument(\"-o\", \"--output\", type=str, default=\"\")")
+        call append(line(".")+10, "    args = parser.parse_args()")
+        call append(line(".")+11, "    main(args)")
+    else
+        call SnewFileCommet_c()
+        if expand("%:e") == "h"
+            call append(line("."), "#ifndef _".toupper(expand("%:t:r"))."_H")
+            call append(line(".")+1, "#define _".toupper(expand("%:t:r"))."_H")
+            call append(line(".")+2, "#ifdef _cplusplus")
+            call append(line(".")+3, "extern \"C\"")
+            call append(line(".")+4, "\"{\"")
+            call append(line(".")+5, "#endif")
+            call append(line(".")+6, "")
+            call append(line(".")+7, "#include <iostream>")
+            call append(line(".")+8, "")
+            call append(line(".")+9, "#ifdef _cplusplus")
+            call append(line(".")+10, "\"}\"")
+            call append(line(".")+11, "#endif")
+            call append(line(".")+12, "#endif //_".toupper(expand("%:t:r"))."_H")
+        elseif expand("%:e") == "hpp"
+            call append(line("."), "#ifndef _".toupper(expand("%:t:r"))."_H")
+            call append(line(".")+1, "#define _".toupper(expand("%:t:r"))."_H")
+            call append(line(".")+2, "")
+            call append(line(".")+3, "#include <iostream>")
+            call append(line(".")+4, "")
+            call append(line(".")+5, "#endif //_".toupper(expand("%:t:r"))."_H")
+        elseif expand("%:e") == "c"
+            call append(line("."), "#include <stdio.h>")
+        elseif expand("%:e") == "cpp"
+            call append(line("."), "#include <iostream>")
+        endif
+    endif
+endfunc
